@@ -2,8 +2,7 @@
 
 >  [!WARNING]
 >  1. This repo is an AI integration project around GitLab
->     As long as I don't have my own GitLab server now and prefer GitHub,
->     this repo remains untouched.
+>     * As long as I don't have my own GitLab server now and prefer GitHub, this repo remains untouched.
 >  2. It was fully created by ClaudeCode Sonnet & Opus.
 >     * Mistakes on cold paths are possible.
 >     * Unstructured, repetitive, strange code is possible.
