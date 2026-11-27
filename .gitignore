@@ -1,0 +1,44 @@
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+build/
+dist/
+.tox/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test runner output (unit tests of git_hooks_impl/)
+TESTS.log
+
+# Local dev / debug artifacts (anything an LLM session might drop here)
+.ai/
+*.log
+*.bak
+*.tmp
+*.local.*
+
+# Node.js deps lazily installed by compile_mermaid.py (mermaid+jsdom, no browser)
+git_hooks_impl/entry_points/commands/_mermaid_validator/node_modules/
+git_hooks_impl/entry_points/commands/_mermaid_validator/package-lock.json

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export AI_TOOLING_SRC="${AI_TOOLING_SRC:-$SCRIPT_DIR}"
+
+# Prefer the repo-local env/ interpreter so `mr` sees the pinned
+# requirements. Falls back to whatever python is on PATH.
+MR_PYTHON="python"
+if [ -x "${AI_TOOLING_SRC}/env/Scripts/python.exe" ]; then
+    MR_PYTHON="${AI_TOOLING_SRC}/env/Scripts/python.exe"
+elif [ -x "${AI_TOOLING_SRC}/env/bin/python" ]; then
+    MR_PYTHON="${AI_TOOLING_SRC}/env/bin/python"
+fi
+
+exec "$MR_PYTHON" "${AI_TOOLING_SRC}/git_hooks_impl/entry_points/cli.py" "$@"

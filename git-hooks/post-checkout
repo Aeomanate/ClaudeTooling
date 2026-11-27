@@ -1,0 +1,41 @@
+#!/bin/sh
+if git check-attr -a . 2>/dev/null | grep -q 'filter: lfs'; then
+    command -v git-lfs >/dev/null 2>&1 || { printf >&2 "\n%s\n\n" "This repository is configured for Git LFS but 'git-lfs' was not found on your path."; exit 2; }
+    git lfs post-checkout "$@"
+fi
+
+# post-checkout hook — cache swap on branch switch + link-check.
+# Args: <prev-ref> <new-ref> <branch-flag>
+# $3 = 1 for branch switches, 0 for file checkouts.
+
+# Skip file checkouts cheaply (before any env-var checks)
+[ "$3" != "1" ] && exit 0
+
+# Kill switch: skip all hook activity if AI_TOOLING_ENABLED isn't true
+[ "$AI_TOOLING_ENABLED" != "true" ] && exit 0
+
+# Recursion guard: skip if invoked from `mr` CLI's internal git ops
+[ -n "$AI_TOOLING_RECURSION_GUARD" ] && exit 0
+
+# Skip mid-rebase
+[ -d .git/rebase-merge ] || [ -d .git/rebase-apply ] && exit 0
+
+# Python availability
+if ! [ -x "$(command -v python)" ]; then
+  exit 0
+fi
+
+# Resolve $AI_TOOLING_SRC (set by ~/.bashrc; fallback for unset case)
+AI_TOOLING_SRC="${AI_TOOLING_SRC:-/c/Kragle/ai_tooling}"
+
+# Prefer the repo-local env/ interpreter so hooks see the pinned
+# requirements. Falls back to whatever python is on PATH.
+MR_PYTHON="python"
+if [ -x "$AI_TOOLING_SRC/env/Scripts/python.exe" ]; then
+  MR_PYTHON="$AI_TOOLING_SRC/env/Scripts/python.exe"
+elif [ -x "$AI_TOOLING_SRC/env/bin/python" ]; then
+  MR_PYTHON="$AI_TOOLING_SRC/env/bin/python"
+fi
+
+"$MR_PYTHON" "$AI_TOOLING_SRC/git_hooks_impl/entry_points/cli.py" cache-swap --prev-ref "$1"
+"$MR_PYTHON" "$AI_TOOLING_SRC/git_hooks_impl/entry_points/link_check.py" || true

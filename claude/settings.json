@@ -1,0 +1,86 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/session_start.py\"",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/resume_after_compact.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/precompact.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Agent|Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/gate.py\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/gate.py\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/check_em_dash.py\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/check_line_citations.py\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/check_content.py\"",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python \"$AI_TOOLING_SRC/claude/hooks/check_deleted_references.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

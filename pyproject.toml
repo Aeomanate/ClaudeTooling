@@ -1,0 +1,46 @@
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = ["env"]
+
+[tool.ruff.lint]
+select = ["ALL"]
+
+# There are no per-file-ignores. Every Python file in the repo is checked
+# against this exact rule set, so anything exempted is exempted here, in one
+# list, with the reason it does not apply to this codebase.
+ignore = [
+    # --- contradicts a documented standard of this repo ---
+    "PT",       # flake8-pytest-style. roles/tester/rules.md mandates unittest
+                # and names pytest as the wrong runner for this project.
+    "T20",      # print() is how every `mr` command writes its output. The
+                # logger (git_hooks_impl/logger.py) is for hook diagnostics,
+                # not for the CLI's own stdout.
+    "CPY001",   # per-file copyright header. This repo carries none.
+    "S603",     # subprocess call audit. This repo is a git/glab wrapper;
+    "S607",     # partial executable path. `git` and `glab` resolve from PATH
+                # by design, so both fire on nearly every command module.
+
+    # --- ruff documents these as conflicting with a formatter ---
+    "COM812",   # missing trailing comma
+    "ISC001",   # implicit string concatenation on one line
+
+    # --- deliberately not enforced ---
+    "E501",     # long lines
+    "ANN",      # type annotations. Not adopted; enabling it is a separate
+                # decision, not a lint cleanup (3009 findings).
+    "SLF001",   # private-member access. Tests exercise our own `_helpers`
+                # directly, which is the intended way to test them.
+    "ARG002",   # unused method argument. @patch injects a mock per decorator
+                # and a test need not assert on all of them.
+
+    # Imports are checked strictly: E402 (import after code) and PLC0415
+    # (import inside a function) are both ON. There are no deferred or
+    # inline imports in this codebase.
+]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
