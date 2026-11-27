@@ -9,7 +9,7 @@
 >     * Tests exist, mostly as bug fixes consequences.
 >     * Even if code coverage could be great, the logic in tests may remain unclear and obsolete.  
 >     * It was a tool for my personal everyday usage and not an attempt to create a "Clean Code" temple.
->  3. This is tested and used only in a Windows 11 environment.
+>  3. This was tested and used only in a Windows 11 environment, and only by me.
 >  4. It's better to use it as a scripts and skills reference. 
 
 After `mr setup`: `git push` syncs your local `BRANCH_PLAN.md` to the GitLab MR
