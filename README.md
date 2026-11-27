@@ -4,8 +4,14 @@
 >  1. This repo is an AI integration project around GitLab
 >     As long as I don't have my own GitLab server now and prefer GitHub,
 >     this repo remains untouched.
->  2. This is tested and used only in a Windows 11 environment.
->  3. It's better to use it as a scripts and skills reference. 
+>  2. It was fully created by ClaudeCode Sonnet & Opus.
+>     * Mistakes on cold paths are possible.
+>     * Unstructured, repetitive, strange code is possible.
+>     * Tests exist, mostly as bug fixes consequences.
+>     * Even if code coverage could be great, the logic in tests may remain unclear and obsolete.  
+>     * It was a tool for my personal everyday usage and not an attempt to create a "Clean Code" temple.
+>  3. This is tested and used only in a Windows 11 environment.
+>  4. It's better to use it as a scripts and skills reference. 
 
 After `mr setup`: `git push` syncs your local `BRANCH_PLAN.md` to the GitLab MR
 description automatically. `git checkout <branch>` swaps in that branch's
