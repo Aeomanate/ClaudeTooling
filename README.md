@@ -1,5 +1,12 @@
 # AI tooling
 
+>  [!WARNING]
+>  This repo is an AI integration project around GitLab
+>  As long as I don't have my own GitLab server now and prefer GitHub,
+>  this repo remains untouched.
+>
+>  It's better to use it as a scripts and skills reference. 
+
 After `mr setup`: `git push` syncs your local `BRANCH_PLAN.md` to the GitLab MR
 description automatically. `git checkout <branch>` swaps in that branch's
 plan from local cache. `mr new` creates a branch, opens a draft MR, and
